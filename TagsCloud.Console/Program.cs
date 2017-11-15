@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autofac;
 using TagsCloudService.FileReaders;
+using TagsCloudService.Images;
 using TagsCloudService.LayoutAlgorithms;
 using TagsCloudService.Validators;
 
@@ -29,10 +30,8 @@ using Console = System.Console;
             var basicFont = new Font(argv.OptFontfamily, Int32.Parse(argv.OptFontsize));
             var width = Int32.Parse(argv.OptWidth);
             var height = Int32.Parse(argv.OptHeight);
-            var outputFile = argv.OptOutputfile ?? $"c:/temp/cloud_{DateTime.Now:yyMMdd_HHmmss}.png";
+            var outputFile = argv.OptOutputfile ?? $"c:/temp/cloud_{DateTime.Now:yyMMdd_HHmmss}.jpeg";
             var inputFileName = argv.OptInputfile ?? "examples.txt";
-
-
 
             #region Set up container
 
@@ -57,7 +56,12 @@ using Console = System.Console;
                 .As<IValidateTag>()
                 .SingleInstance();
 
-            builder.Register(c => new Painter(width, height, outputFile))
+            // image formats
+            builder.RegisterType<ImageFormatReslover>()
+                .As<IResolveImageFormat>()
+                .SingleInstance();
+
+            builder.Register(c => new BitmapPainter(width, height, outputFile, c.Resolve<IResolveImageFormat>()))
                 .AsSelf();
 
             builder.RegisterType<TagLoader>()
@@ -69,8 +73,7 @@ using Console = System.Console;
 
             var reader = container.Resolve<TagLoader>();
 
-
-            using (var painter = container.Resolve<Painter>())
+            using (var painter = container.Resolve<BitmapPainter>())
             {
                 Console.WriteLine("Reading file...");
 

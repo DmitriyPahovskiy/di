@@ -5,12 +5,15 @@ dotnet
 kontur
 C#
 lambda
+out
 expression
 keyboard
 Mouse
+in
 Monitor
 laptop
 c#
+we
 kontur
 function
 variable
@@ -18,12 +21,14 @@ page
 programm
 reflection
 c#
+you
 dotnet
 kontur
 visual studio
 microsoft
 windows
 linux
+I
 rules
 C#
 C#
