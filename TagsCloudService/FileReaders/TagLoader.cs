@@ -12,11 +12,13 @@ namespace TagsCloudService.FileReaders
     {
         private readonly IEnumerable<IReadFromFile> fileReaders;
         private readonly IEnumerable<IValidateTag> tagValidators;
+        private readonly IEnumerable<IProcessTag> tagProcessors;
 
-        public TagLoader(IEnumerable<IReadFromFile> fileReaders, IEnumerable<IValidateTag> tagValidators)
+        public TagLoader(IEnumerable<IReadFromFile> fileReaders, IEnumerable<IValidateTag> tagValidators, IEnumerable<IProcessTag> tagProcessors)
         {
             this.fileReaders = fileReaders;
             this.tagValidators = tagValidators;
+            this.tagProcessors = tagProcessors;
         }
 
         public IDictionary<string, int> ReadValidTagsWithWeights(string fileName)
@@ -29,12 +31,12 @@ namespace TagsCloudService.FileReaders
             var result = new Dictionary<string,int>();
 
             var tags = reader.ReadRows(fileName)
-                .Where(t=> tagValidators.Any(v=>v.IsValid(t)))
-                .Select(t=>t.ToLowerInvariant());
+                .Where(t => tagValidators.All(v => v.IsValid(t)))
+                .Select(t => tagProcessors.Aggregate(t, (current, processor) => processor.Process(current)));
 
             int count;
             foreach(var word in tags)
-                result[word.ToLower()] = result.TryGetValue(word.ToLower(), out count) ? count + 1 : 1;
+                result[word] = result.TryGetValue(word, out count) ? count + 1 : 1;
 
             return result;
         }

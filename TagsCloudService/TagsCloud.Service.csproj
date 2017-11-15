@@ -53,8 +53,10 @@
     <Compile Include="Layouters\IPositioner.cs" />
     <Compile Include="Layouters\ITagsColorProvider.cs" />
     <Compile Include="Validators\BoringWordsFilter.cs" />
+    <Compile Include="Validators\IProcessTag.cs" />
     <Compile Include="Validators\IValidateTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\ToLowerCaseProcessor.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

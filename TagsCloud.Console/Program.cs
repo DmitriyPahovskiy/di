@@ -56,7 +56,12 @@ using Console = System.Console;
                 .As<IValidateTag>()
                 .SingleInstance();
 
-            // image formats
+            // tag processors:
+            builder.RegisterType<ToLowerCaseProcessor>()
+                .As<IProcessTag>()
+                .SingleInstance();
+
+            // image formats:
             builder.RegisterType<ImageFormatReslover>()
                 .As<IResolveImageFormat>()
                 .SingleInstance();
