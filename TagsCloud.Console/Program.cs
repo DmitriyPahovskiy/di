@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,13 +21,18 @@ using Console = System.Console;
 
         static void Main(string[] args)
         {
-            var spiralFactorDelta = 0.1f;
-            var spiralPower = 0.001f;
-            var basicFont = new Font("Arial", 16);
-            var width = 800;
-            var height = 600;
-            var outputFile = $"c:/temp/cloud_{DateTime.Now:yyMMdd_HHmmss}.png";
-            var inputFileName = "examples.txt";
+            var argv = new MainArgs(args);
+
+            var culture = CultureInfo.InvariantCulture;
+            var spiralFactorDelta = Single.Parse(argv.OptSpiralfactor, culture.NumberFormat);
+            var spiralPower = Single.Parse(argv.OptSpiralpower, culture.NumberFormat);
+            var basicFont = new Font(argv.OptFontfamily, Int32.Parse(argv.OptFontsize));
+            var width = Int32.Parse(argv.OptWidth);
+            var height = Int32.Parse(argv.OptHeight);
+            var outputFile = argv.OptOutputfile ?? $"c:/temp/cloud_{DateTime.Now:yyMMdd_HHmmss}.png";
+            var inputFileName = argv.OptInputfile ?? "examples.txt";
+
+
 
             #region Set up container
 
@@ -53,21 +60,21 @@ using Console = System.Console;
             builder.Register(c => new Painter(width, height, outputFile))
                 .AsSelf();
 
-            builder.RegisterType<TagFileReader>()
+            builder.RegisterType<TagLoader>()
                 .AsSelf();
 
             container = builder.Build();
             
             #endregion
 
-            var reader = container.Resolve<TagFileReader>();
+            var reader = container.Resolve<TagLoader>();
 
 
             using (var painter = container.Resolve<Painter>())
             {
                 Console.WriteLine("Reading file...");
 
-                var tags = reader.ReadTagsWithWeights(inputFileName);
+                var tags = reader.ReadValidTagsWithWeights(inputFileName);
                 var canvas = painter.Canvas;
                 var layouter = new CircularCloudLayouter(canvas, basicFont, container.Resolve<IPositioner>(), container.Resolve<ITagsColorProvider>());
 

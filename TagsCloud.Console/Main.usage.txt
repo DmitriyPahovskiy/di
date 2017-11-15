@@ -1,0 +1,43 @@
+﻿Example usage for T4 Docopt.NET
+
+Usage:
+  TagsCloud.Console.exe [--width=<wd>] [--height=<ht>] [--fontfamily=<ff>] [--fontsize=<fs>] [--spiralfactor=<sf>] [--spiralpower=<sp>] [--inputfile=<if>] [--outputfile=<of>]
+
+Options:
+ --width=<wd>		clouds width [default:800]
+ --height=<ht>		clouds height [default:600]
+ --fontfamily=<ff>  font family [default:Arial]
+ --fontsize=<fs>	font size [default:16]
+ --spiralfactor=<sf> archimedian spiral factor step [default:0.1]
+ --spiralpower=<sp> archimedian spiral power [default:0.001]
+ --inputfile=<if>   file with words [default:examples.txt]
+ --outputfile=<of>  output file name
+
+
+Explanation:
+ This is an example usage file that needs to be customized.
+ Every time you change this file, run the Custom Tool command
+ on T4DocoptNet.tt to re-generate the MainArgs class
+ (defined in T4DocoptNet.cs).
+ You can then use the MainArgs classed as follows:
+
+    class Program
+    {
+
+       static void DoStuff(string arg, bool flagO, string longValue)
+       {
+         // ...
+       }
+
+        static void Main(string[] argv)
+        {
+            // Automatically exit(1) if invalid arguments
+            var args = new MainArgs(argv, exit: true);
+            if (args.CmdCommand)
+            {
+                Console.WriteLine("First command");
+                DoStuff(args.ArgArg, args.OptO, args.OptLong);
+            }
+        }
+    }
+

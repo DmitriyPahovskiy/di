@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileReaders\TagFileReader.cs" />
+    <Compile Include="FileReaders\TagLoader.cs" />
     <Compile Include="FileReaders\IReadFromFile.cs" />
     <Compile Include="FileReaders\TextFileReader.cs" />
     <Compile Include="Layouters\ArchimedeanSpiralPositioner.cs" />

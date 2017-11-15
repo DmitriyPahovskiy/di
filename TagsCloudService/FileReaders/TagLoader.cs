@@ -8,18 +8,18 @@ using TagsCloudService.Validators;
 
 namespace TagsCloudService.FileReaders
 {
-    public class TagFileReader
+    public class TagLoader
     {
         private readonly IEnumerable<IReadFromFile> fileReaders;
         private readonly IEnumerable<IValidateTag> tagValidators;
 
-        public TagFileReader(IEnumerable<IReadFromFile> fileReaders, IEnumerable<IValidateTag> tagValidators)
+        public TagLoader(IEnumerable<IReadFromFile> fileReaders, IEnumerable<IValidateTag> tagValidators)
         {
             this.fileReaders = fileReaders;
             this.tagValidators = tagValidators;
         }
 
-        public IDictionary<string, int> ReadTagsWithWeights(string fileName)
+        public IDictionary<string, int> ReadValidTagsWithWeights(string fileName)
         {
             var fileExtension = Path.GetExtension(fileName);
             var reader = fileReaders.FirstOrDefault(r => r.SupportFile(fileExtension));
