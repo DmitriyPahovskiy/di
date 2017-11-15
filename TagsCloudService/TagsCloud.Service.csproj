@@ -44,7 +44,7 @@
     <Compile Include="FileReaders\TagLoader.cs" />
     <Compile Include="FileReaders\IReadFromFile.cs" />
     <Compile Include="FileReaders\TextFileReader.cs" />
-    <Compile Include="Images\BirmapPainter.cs" />
+    <Compile Include="Images\BitmapPainter.cs" />
     <Compile Include="Images\ImageFormatReslover.cs" />
     <Compile Include="Images\IResolveImageFormat.cs" />
     <Compile Include="Layouters\ArchimedeanSpiralPositioner.cs" />
