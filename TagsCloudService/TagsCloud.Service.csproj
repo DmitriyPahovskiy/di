@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,10 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileReaders\TagFileReader.cs" />
     <Compile Include="FileReaders\IReadFromFile.cs" />
     <Compile Include="FileReaders\TextFileReader.cs" />
-    <Compile Include="LayoutAlgorithms\ArchimedeanSpiralPositioner.cs" />
-    <Compile Include="LayoutAlgorithms\IPositioner.cs" />
+    <Compile Include="Layouters\ArchimedeanSpiralPositioner.cs" />
+    <Compile Include="Layouters\CircularCloudLayouter.cs" />
+    <Compile Include="Layouters\ColorProvider.cs" />
+    <Compile Include="Layouters\IPositioner.cs" />
+    <Compile Include="Layouters\ITagsColorProvider.cs" />
     <Compile Include="Validators\BoringWordsFilter.cs" />
     <Compile Include="Validators\IValidateTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -8,6 +8,8 @@ namespace TagsCloudService.FileReaders
 {
     public interface IReadFromFile
     {
+        bool SupportFile(string fileExtension);
+
         IEnumerable<string> ReadRows(string fileName);
     }
 }
